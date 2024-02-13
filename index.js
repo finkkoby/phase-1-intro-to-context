@@ -43,14 +43,13 @@ function hoursWorkedOnDate(employeeRecordObject, dateStamp="YYYY-MM-DD") {
     let arrayIn = employeeRecordObject.timeInEvents;
     let arrayOut = employeeRecordObject.timeOutEvents;
     let stamps = [];
-    for (let object of arrayIn) {
-        if (object["date"] === dateStamp) {
-            stamps.push(object["hour"]);
-        }
-    }
-    for (let object of arrayOut) {
-        if (object["date"] === dateStamp) {
-            stamps.push(object["hour"]);
+    for (let i = 0; i < arrayIn.length; i++) {
+        if (arrayIn[i]['date'] === dateStamp) {
+            stamps.push(arrayIn[i]['hour']);
+            stamps.push(arrayOut[i]['hour']);
+        } else if (arrayIn[i]['date'] === undefined) {
+            alert(`Error: missing time-in punch for this date for ${arrayOut[i]['date']}`);
+            break;
         }
     }
     return (stamps[1] - stamps[0]) / 100;
